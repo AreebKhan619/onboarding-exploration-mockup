@@ -13,6 +13,10 @@ export const InputContainer = styled.div<InputProps>`
     color: ${(props) => props.theme.colors.greyPrimary};
     font-weight: 600;
     margin-block-end: 1.2rem;
+
+    span.secondary-label{
+      color: ${props=>props.theme.colors.greySecondary};
+    }
   }
   input {
     width: ${(props) => {
@@ -24,8 +28,7 @@ export const InputContainer = styled.div<InputProps>`
       }
     }};
     padding: 1.6rem;
-    border-radius: 0.7rem;
+    border-radius: ${(props) => props.theme.borderRadius.small};
     border: 0.1rem solid ${(props) => props.theme.colors.greySecondary};
   }
 `;
-export const CustomInput = styled.input``;

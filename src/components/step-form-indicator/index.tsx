@@ -11,11 +11,12 @@ const StepFormIndicator: React.FC<StepFormIndicatorProps> = ({
   currentStep,
   disableBalloonNavigation,
 }) => {
+  const stepArr = new Array(totalSteps).fill(null);
   return (
     <FormIndicatorContainer>
-      {[1, 2, 3, 4].map((stepNo) => (
-        <StepBalloon isCompleted={stepNo < currentStep} key={stepNo}>
-          {stepNo}
+      {stepArr.map((_, stepNo) => (
+        <StepBalloon isCompleted={stepNo + 1 <= currentStep} key={stepNo}>
+          {stepNo + 1}
         </StepBalloon>
       ))}
     </FormIndicatorContainer>

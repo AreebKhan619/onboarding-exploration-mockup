@@ -3,7 +3,7 @@ import { ThemeProvider } from "styled-components";
 
 export const theme = {
   colors: {
-    primaryPurple: "#664DE5",
+    purplePrimary: "#664DE5",
     white: "#ffffff",
     greyPrimary: "#717C94",
     greySecondary: "#ADB4C1",
@@ -14,6 +14,14 @@ export const theme = {
     medium: "2rem",
     large: "2.5rem",
   },
+  borderRadius: {
+    small: "0.7rem",
+    medium: "1rem",
+    large: "1.2rem",
+  },
+  paddingMargins: {
+    medium: "1.6rem"
+  }
 };
 
 const Theme = ({ children }: { children: React.ReactNode }) => (

@@ -6,6 +6,10 @@ export const OnboardingContainer = styled.section`
   align-items: center;
   justify-content: center;
 
+  .title{
+    margin-block-end: 2rem;
+  }
+
   .subtitle{
     color: ${props=>props.theme.colors.greyPrimary};
     font-weight: 500;

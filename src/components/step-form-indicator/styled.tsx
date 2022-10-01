@@ -21,17 +21,17 @@ export const StepBalloon = styled.div<StepBalloonProps>`
   border: 1px solid
     ${(props) =>
       props.isCompleted
-        ? props.theme.colors.primaryPurple
+        ? props.theme.colors.purplePrimary
         : props.theme.colors.greySecondary};
   border-radius: 50%;
   background-color: ${(props) =>
     props.isCompleted
-      ? props.theme.colors.primaryPurple
+      ? props.theme.colors.purplePrimary
       : props.theme.colors.white};
   color: ${(props) =>
     props.isCompleted
       ? props.theme.colors.white
-      : props.theme.colors.primaryPurple};
+      : props.theme.colors.purplePrimary};
   font-size: ${(props) => props.theme.fontSizes.small};
 
   &:first-child::before,
@@ -49,7 +49,7 @@ export const StepBalloon = styled.div<StepBalloonProps>`
     height: 0.1rem;
     background-color: ${(props) =>
       props.isCompleted
-        ? props.theme.colors.primaryPurple
+        ? props.theme.colors.purplePrimary
         : props.theme.colors.greySecondary};
   }
   ::before {
