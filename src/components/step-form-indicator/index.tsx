@@ -1,4 +1,4 @@
-import { FormIndicatorContainer } from "./styled";
+import { FormIndicatorContainer, StepBalloon } from "./styled";
 
 interface StepFormIndicatorProps {
   totalSteps: number;
@@ -11,7 +11,15 @@ const StepFormIndicator: React.FC<StepFormIndicatorProps> = ({
   currentStep,
   disableBalloonNavigation,
 }) => {
-  return <FormIndicatorContainer>Hello World</FormIndicatorContainer>;
+  return (
+    <FormIndicatorContainer>
+      {[1, 2, 3, 4].map((stepNo) => (
+        <StepBalloon isCompleted={stepNo < currentStep} key={stepNo}>
+          {stepNo}
+        </StepBalloon>
+      ))}
+    </FormIndicatorContainer>
+  );
 };
 
 export default StepFormIndicator;
