@@ -4,17 +4,19 @@ interface StepBalloonProps {
   isCompleted: boolean;
 }
 
-const gap = `4rem`;
+const gap = 5;
 
 export const FormIndicatorContainer = styled.div`
   display: flex;
-  gap: ${gap};
+  gap: ${gap}rem;
+  justify-content: center;
+  margin-block: 4rem;
 `;
 
 export const StepBalloon = styled.div<StepBalloonProps>`
   position: relative;
-  width: 5rem;
-  height: 5rem;
+  width: ${gap - 1}rem;
+  height: ${gap - 1}rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,9 +45,9 @@ export const StepBalloon = styled.div<StepBalloonProps>`
   ::before {
     content: "";
     position: absolute;
-    left: calc(-4.2rem/ 2);
-    right: calc(-4.2rem / 2);
-    width: calc(${gap} / 2);
+    left: calc(-${gap + 0.2}rem / 2);
+    right: calc(-${gap + 0.2}rem / 2);
+    width: calc(${gap}rem / 2);
     height: 0.12rem;
     background-color: ${(props) =>
       props.isCompleted

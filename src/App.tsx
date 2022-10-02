@@ -7,7 +7,7 @@ import { OnboardingContainer } from "./styled";
 import { OnboardingSteps } from "./ts/enums";
 import { ForUseBy } from "./ts/types";
 
-import { SelfIcon, TeamIcon } from "./assets/images";
+import { CheckIcon, SelfIcon, TeamIcon } from "./assets/images";
 import AppLogo from "./components/app-logo";
 
 function App() {
@@ -133,6 +133,8 @@ function App() {
         totalSteps={OnboardingSteps.CompletedStep}
         currentStep={currentStep}
       />
+
+      {currentStep === OnboardingSteps.CompletedStep && <img src={CheckIcon} />}
 
       <h2 className="title">{title}</h2>
       <small className="subtitle">{subtitle}</small>

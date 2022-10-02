@@ -24,6 +24,7 @@ html{
 
 body{
   font-size: 2rem;
+  margin: 0;
 }
 
 `;
