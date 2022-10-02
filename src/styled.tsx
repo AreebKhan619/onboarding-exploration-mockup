@@ -20,8 +20,13 @@ export const OnboardingContainer = styled.section`
     text-align: center;
   }
 
+  .check-icon{
+    margin-block-start: 2rem;
+  }
+
   form.input-form{
     margin-block: 3rem;
+    padding-inline: 1rem;
     width: min(40rem, 100%);
   }
 `;

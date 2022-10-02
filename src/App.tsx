@@ -134,7 +134,7 @@ function App() {
         currentStep={currentStep}
       />
 
-      {currentStep === OnboardingSteps.CompletedStep && <img src={CheckIcon} />}
+      {currentStep === OnboardingSteps.CompletedStep && <img className="check-icon" src={CheckIcon} />}
 
       <h2 className="title">{title}</h2>
       <small className="subtitle">{subtitle}</small>
