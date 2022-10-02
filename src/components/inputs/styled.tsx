@@ -14,8 +14,8 @@ export const InputContainer = styled.div<InputProps>`
     font-weight: 600;
     margin-block-end: 1.2rem;
 
-    span.secondary-label{
-      color: ${props=>props.theme.colors.greySecondary};
+    span.secondary-label {
+      color: ${(props) => props.theme.colors.greySecondary};
     }
   }
   input {
@@ -30,5 +30,27 @@ export const InputContainer = styled.div<InputProps>`
     padding: 1.6rem;
     border-radius: ${(props) => props.theme.borderRadius.small};
     border: 0.1rem solid ${(props) => props.theme.colors.greySecondary};
+  }
+
+  .split-container {
+    display: flex;
+    .left {
+      padding: 1.6rem;
+      /* TODO: share css with input */
+      border-radius: ${(props) => props.theme.borderRadius.small};
+      border: 0.1rem solid ${(props) => props.theme.colors.greySecondary};
+      font-size: ${props=>props.theme.fontSizes.xSmall};
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: none;
+      background-color: #F8F9FC;
+      color: ${props=>props.theme.colors.greyPrimary};
+      font-weight: 500;
+    }
+
+    input {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
   }
 `;

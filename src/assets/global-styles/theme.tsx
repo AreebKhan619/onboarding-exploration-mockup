@@ -10,6 +10,7 @@ export const theme = {
   },
   fonts: ["Inter", "sans-serif"],
   fontSizes: {
+    xSmall: "1.3rem",
     small: "1.5rem",
     medium: "2rem",
     large: "2.5rem",

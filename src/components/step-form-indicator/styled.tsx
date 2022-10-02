@@ -43,10 +43,10 @@ export const StepBalloon = styled.div<StepBalloonProps>`
   ::before {
     content: "";
     position: absolute;
-    left: calc(-${gap} / 2);
-    right: calc(-${gap} / 2);
+    left: calc(-4.2rem/ 2);
+    right: calc(-4.2rem / 2);
     width: calc(${gap} / 2);
-    height: 0.1rem;
+    height: 0.12rem;
     background-color: ${(props) =>
       props.isCompleted
         ? props.theme.colors.purplePrimary

@@ -86,7 +86,9 @@ function App() {
         <Input placeholder="Steve" label="Display Name" /> */}
 
         <Input
-          placeholder="Steve"
+          mode="split"
+          prefix="www.eden.com/"
+          placeholder="Example"
           label="Workspace URL"
           secondaryLabel="(optional)"
         />
