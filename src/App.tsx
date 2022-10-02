@@ -7,6 +7,9 @@ import { OnboardingContainer } from "./styled";
 import { OnboardingSteps } from "./ts/enums";
 import { ForUseBy } from "./ts/types";
 
+import { SelfIcon, TeamIcon } from "./assets/images";
+import AppLogo from "./components/app-logo";
+
 function App() {
   const [currentStep, setCurrentStep] = useState<OnboardingSteps>(
     OnboardingSteps.NameStep
@@ -79,21 +82,6 @@ function App() {
     switch (currentStep) {
       case OnboardingSteps.NameStep:
         return (
-          <Select value={forUseBy} onChange={setForUseBy}>
-            <Option
-              value="self"
-              title="For myself"
-              subtitle="Write better. Think more clearly. Stay organised."
-            />
-            <Option
-              value="team"
-              title="With my team"
-              subtitle="Wikis, docs, tasks &amp; projects, all in one place."
-            />
-          </Select>
-        );
-      case OnboardingSteps.NameStep:
-        return (
           <>
             <Input placeholder="Steve Jobs" label="Full Name" />
             <Input placeholder="Steve" label="Display Name" />
@@ -114,7 +102,22 @@ function App() {
           </>
         );
       case OnboardingSteps.UseStep:
-        return <>{/* Select */}</>;
+        return (
+          <Select value={forUseBy} onChange={setForUseBy}>
+            <Option
+              icon={SelfIcon}
+              value="self"
+              title="For myself"
+              subtitle="Write better. Think more clearly. Stay organised."
+            />
+            <Option
+              icon={TeamIcon}
+              value="team"
+              title="With my team"
+              subtitle="Wikis, docs, tasks &amp; projects, all in one place."
+            />
+          </Select>
+        );
       case OnboardingSteps.CompletedStep:
         break;
       default:
@@ -124,6 +127,8 @@ function App() {
 
   return (
     <OnboardingContainer className="onboarding-app">
+      <AppLogo />
+
       <StepFormIndicator
         totalSteps={OnboardingSteps.CompletedStep}
         currentStep={currentStep}

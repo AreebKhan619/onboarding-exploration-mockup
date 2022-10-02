@@ -16,6 +16,12 @@ export const OptionContainer = styled.div<{
     font-weight: 600;
   }
 
+  .icon{
+    width: 3rem;
+    filter: brightness(${props=>props.isSelected ? 1 : 0});
+    margin-block-end: .5rem;
+  }
+
   &:hover{
     background-color: ${props=>props.theme.colors.greyTertiary};
   }

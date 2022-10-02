@@ -33,6 +33,7 @@ export const InputContainer = styled.div<InputProps>`
     &:focus-within {
       outline-color: ${(props) => props.theme.colors.purplePrimary};
     }
+
   }
 
   .split-container {
