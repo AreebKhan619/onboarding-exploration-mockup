@@ -1,9 +1,11 @@
 import React, { FormEvent, useMemo, useState } from "react";
 import { Button } from "./components/buttons";
 import { Input } from "./components/inputs";
+import Select, { Option } from "./components/select";
 import StepFormIndicator from "./components/step-form-indicator";
 import { OnboardingContainer } from "./styled";
-import { OnboardingSteps } from "./types/enums";
+import { OnboardingSteps } from "./ts/enums";
+import { ForUseBy } from "./ts/types";
 
 function App() {
   const [currentStep, setCurrentStep] = useState<OnboardingSteps>(
@@ -11,6 +13,7 @@ function App() {
   );
 
   const [fullName, setFullName] = useState("");
+  const [forUseBy, setForUseBy] = useState<ForUseBy | null>(null);
 
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,7 +64,8 @@ function App() {
         break;
       case OnboardingSteps.CompletedStep:
         title = "Congratulations, " + fullName + "!";
-        subtitle = "You have completed the onboarding, you can start using the Eden!";
+        subtitle =
+          "You have completed the onboarding, you can start using the Eden!";
         break;
 
       default:
@@ -70,6 +74,53 @@ function App() {
 
     return { title, subtitle, fullName };
   }, [currentStep]);
+
+  const getStepBasedContent = () => {
+    switch (currentStep) {
+      case OnboardingSteps.NameStep:
+        return (
+          <Select value={forUseBy} onChange={setForUseBy}>
+            <Option
+              value="self"
+              title="For myself"
+              subtitle="Write better. Think more clearly. Stay organised."
+            />
+            <Option
+              value="team"
+              title="With my team"
+              subtitle="Wikis, docs, tasks &amp; projects, all in one place."
+            />
+          </Select>
+        );
+      case OnboardingSteps.NameStep:
+        return (
+          <>
+            <Input placeholder="Steve Jobs" label="Full Name" />
+            <Input placeholder="Steve" label="Display Name" />
+          </>
+        );
+      case OnboardingSteps.WorkspaceStep:
+        return (
+          <>
+            <Input placeholder="Eden" label="Workspace Name" />
+
+            <Input
+              mode="split"
+              prefix="www.eden.com/"
+              placeholder="Example"
+              label="Workspace URL"
+              secondaryLabel="(optional)"
+            />
+          </>
+        );
+      case OnboardingSteps.UseStep:
+        return <>{/* Select */}</>;
+      case OnboardingSteps.CompletedStep:
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <OnboardingContainer className="onboarding-app">
@@ -82,16 +133,8 @@ function App() {
       <small className="subtitle">{subtitle}</small>
 
       <form onSubmit={onSubmitHandler} className="input-form">
-        {/* <Input placeholder="Steve Jobs" label="Full Name" />
-        <Input placeholder="Steve" label="Display Name" /> */}
+        {getStepBasedContent()}
 
-        <Input
-          mode="split"
-          prefix="www.eden.com/"
-          placeholder="Example"
-          label="Workspace URL"
-          secondaryLabel="(optional)"
-        />
         <Button
           text={isCompletedStep ? "Launch Eden" : "Create Workspace"}
           variant="primary"

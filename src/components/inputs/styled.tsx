@@ -30,6 +30,9 @@ export const InputContainer = styled.div<InputProps>`
     padding: 1.6rem;
     border-radius: ${(props) => props.theme.borderRadius.small};
     border: 0.1rem solid ${(props) => props.theme.colors.greySecondary};
+    &:focus-within {
+      outline-color: ${(props) => props.theme.colors.purplePrimary};
+    }
   }
 
   .split-container {
@@ -39,12 +42,12 @@ export const InputContainer = styled.div<InputProps>`
       /* TODO: share css with input */
       border-radius: ${(props) => props.theme.borderRadius.small};
       border: 0.1rem solid ${(props) => props.theme.colors.greySecondary};
-      font-size: ${props=>props.theme.fontSizes.xSmall};
+      font-size: ${(props) => props.theme.fontSizes.xSmall};
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
       border-right: none;
-      background-color: #F8F9FC;
-      color: ${props=>props.theme.colors.greyPrimary};
+      background-color: ${(props) => props.theme.colors.greyTertiary};
+      color: ${(props) => props.theme.colors.greyPrimary};
       font-weight: 500;
     }
 

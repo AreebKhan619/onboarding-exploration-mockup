@@ -5,8 +5,9 @@ export const theme = {
   colors: {
     purplePrimary: "#664DE5",
     white: "#ffffff",
-    greyPrimary: "#717C94",
+    greyPrimary: "#6c6f76",
     greySecondary: "#ADB4C1",
+    greyTertiary: '#F8F9FC'
   },
   fonts: ["Inter", "sans-serif"],
   fontSizes: {
