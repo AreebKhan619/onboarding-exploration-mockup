@@ -30,6 +30,7 @@ const Select: React.FC<SelectProps> = ({ value, onChange, children }) => {
 };
 
 export const Option: React.FC<OptionProps> = ({
+  icon,
   title,
   subtitle,
   onClick,
@@ -37,6 +38,7 @@ export const Option: React.FC<OptionProps> = ({
 }) => {
   return (
     <OptionContainer onClick={onClick} isSelected={isSelected}>
+      {icon && <img src={icon} className="icon" />}
       <div className="title">{title}</div>
       <div className="subtitle">{subtitle}</div>
     </OptionContainer>
