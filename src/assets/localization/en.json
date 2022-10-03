@@ -1,0 +1,15 @@
+{
+  "stepOneTitle": "Welcome! First things first...",
+  "stepOneSubtitle": "You can always change them later",
+  "stepTwoTitle": "Let's set up a home for all your work",
+  "stepTwoSubtitle": "You can always create another workspace later",
+  "stepThreeTitle": "How are you planning to use Eden?",
+  "stepThreeSubtitle": "We'll streamline your setup experience accordingly",
+  "stepFourSubtitle": "You have completed the onboarding, you can start using the Eden!",
+  "useStepOptionOneTitle": "For myself",
+  "useStepOptionOneSubtitle": "Write better. Think more clearly. Stay organised.",
+  "useStepOptionTwoTitle": "With my team",
+  "useStepOptionTwoSubtitle": "Wikis, docs, tasks & projects, all in one place.",
+  "onboardingPrimaryBtnText": "Create Workspace",
+  "onboardingSecondaryBtnText": "Launch Eden"
+}

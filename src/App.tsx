@@ -6,6 +6,7 @@ import StepFormIndicator from "./components/step-form-indicator";
 import { OnboardingContainer } from "./styled";
 import { OnboardingSteps } from "./ts/enums";
 import { ForUseBy } from "./ts/types";
+import Text from "./assets/localization/en.json";
 
 import { CheckIcon, SelfIcon, TeamIcon } from "./assets/images";
 import AppLogo from "./components/app-logo";
@@ -37,21 +38,20 @@ function App() {
 
     switch (currentStep) {
       case OnboardingSteps.NameStep:
-        title = "Welcome! First things first...";
-        subtitle = "You can always change them later";
+        title = Text.stepOneTitle;
+        subtitle = Text.stepOneSubtitle;
         break;
       case OnboardingSteps.WorkspaceStep:
-        title = "Let's set up a home for all your work";
-        subtitle = "You can always create another workspace later";
+        title = Text.stepTwoTitle;
+        subtitle = Text.stepTwoSubtitle;
         break;
       case OnboardingSteps.UseStep:
-        title = "How are you planning to use Eden?";
-        subtitle = "We'll streamline your setup experience accordingly";
+        title = Text.stepThreeTitle;
+        subtitle = Text.stepThreeSubtitle;
         break;
       case OnboardingSteps.CompletedStep:
         title = "Congratulations, " + fullName + "!";
-        subtitle =
-          "You have completed the onboarding, you can start using the Eden!";
+        subtitle = Text.stepFourSubtitle;
         break;
       default:
         break;
@@ -114,14 +114,14 @@ function App() {
             <Option
               icon={SelfIcon}
               value="self"
-              title="For myself"
-              subtitle="Write better. Think more clearly. Stay organised."
+              title={Text.useStepOptionOneTitle}
+              subtitle={Text.useStepOptionOneSubtitle}
             />
             <Option
               icon={TeamIcon}
               value="team"
-              title="With my team"
-              subtitle="Wikis, docs, tasks &amp; projects, all in one place."
+              title={Text.useStepOptionTwoTitle}
+              subtitle={Text.useStepOptionTwoSubtitle}
             />
           </Select>
         );
@@ -153,7 +153,11 @@ function App() {
         {getStepBasedContent()}
 
         <Button
-          text={isCompletedStep ? "Launch Eden" : "Create Workspace"}
+          text={
+            isCompletedStep
+              ? Text.onboardingSecondaryBtnText
+              : Text.onboardingPrimaryBtnText
+          }
           variant="primary"
         />
       </form>
