@@ -13,13 +13,18 @@ const StepFormIndicator: React.FC<StepFormIndicatorProps> = ({
   setStep,
 }) => {
   const stepArr = new Array(totalSteps).fill(null);
+
+  const onStepClick = (stepNo: number) => {
+    stepNo <= currentStep && setStep?.(stepNo);
+  };
+
   return (
     <FormIndicatorContainer>
       {stepArr.map((_, stepNo) => {
         const translatedStepNo = stepNo + 1;
         return (
           <StepBalloon
-            onClick={() => setStep?.(translatedStepNo)}
+            onClick={() => onStepClick(translatedStepNo)}
             isCompleted={translatedStepNo <= currentStep}
             key={translatedStepNo}
           >

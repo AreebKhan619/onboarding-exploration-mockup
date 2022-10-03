@@ -1,4 +1,4 @@
-import React, { FormEvent, useMemo, useState } from "react";
+import React, { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "./components/buttons";
 import { Input } from "./components/inputs";
 import Select, { Option } from "./components/select";
@@ -11,7 +11,7 @@ import Text from "./assets/localization/en.json";
 import { CheckIcon, SelfIcon, TeamIcon } from "./assets/images";
 import AppLogo from "./components/app-logo";
 
-function App() {
+function Onboarding() {
   const [currentStep, setCurrentStep] = useState<OnboardingSteps>(
     OnboardingSteps.NameStep
   );
@@ -22,9 +22,16 @@ function App() {
   const [workspaceURL, setWorkspaceURL] = useState("");
   const [forUseBy, setForUseBy] = useState<ForUseBy | null>(null);
 
+  const focusableInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    focusableInputRef?.current?.focus?.();
+  }, [currentStep]);
+
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (currentStep === OnboardingSteps.CompletedStep) {
+      window.alert("App launching...");
     } else {
       setCurrentStep(currentStep + 1);
     }
@@ -66,6 +73,7 @@ function App() {
         return (
           <>
             <Input
+              ref={focusableInputRef}
               value={fullName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setFullName(e.target.value)
@@ -87,6 +95,7 @@ function App() {
         return (
           <>
             <Input
+              ref={focusableInputRef}
               value={workspaceName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setWorkspaceName(e.target.value)
@@ -125,8 +134,6 @@ function App() {
             />
           </Select>
         );
-      case OnboardingSteps.CompletedStep:
-        break;
       default:
         break;
     }
@@ -165,4 +172,4 @@ function App() {
   );
 }
 
-export default App;
+export default Onboarding;

@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { InputContainer } from "./styled";
 
 interface InputProps extends React.HTMLProps<HTMLInputElement> {
@@ -9,25 +10,25 @@ interface InputProps extends React.HTMLProps<HTMLInputElement> {
   prefix?: string;
 }
 
-export const Input: React.FC<InputProps> = ({
+export const Input = forwardRef<HTMLInputElement, InputProps>(({
   label,
   w = "full",
   prefix = "Enter value",
   mode = "normal",
   secondaryLabel,
   ...inputElementProps
-}) => {
+}, ref) => {
   const getInput = () => {
     switch (mode) {
       case "split":
         return (
           <div className="split-container">
             <span className="left">{prefix}</span>
-            <input {...inputElementProps} />
+            <input {...inputElementProps} ref={ref} />
           </div>
         );
       case "normal":
-        return <input {...inputElementProps} />;
+        return <input {...inputElementProps} ref={ref}/>;
       default:
         break;
     }
@@ -44,4 +45,4 @@ export const Input: React.FC<InputProps> = ({
       {getInput()}
     </InputContainer>
   );
-};
+});
