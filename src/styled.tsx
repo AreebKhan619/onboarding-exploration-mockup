@@ -7,26 +7,32 @@ export const OnboardingContainer = styled.section`
   justify-content: center;
   min-height: 100vh;
 
-  .title{
+  .title {
     margin-block-end: 2rem;
   }
 
-  .subtitle{
-    color: ${props=>props.theme.colors.greyPrimary};
+  .subtitle {
+    color: ${(props) => props.theme.colors.greyPrimary};
     font-weight: 500;
   }
 
-  &>.title, &>.subtitle{
+  & > .title,
+  & > .subtitle {
     text-align: center;
   }
 
-  .check-icon{
+  .check-icon {
     margin-block-start: 2rem;
   }
 
-  form.input-form{
+  form.input-form {
     margin-block: 3rem;
     padding-inline: 1rem;
     width: min(40rem, 100%);
+  }
+
+  .error {
+    font-size: ${(props) => props.theme.fontSizes.xSmall};
+    color: ${(props) => props.theme.colors.redPrimary};
   }
 `;
