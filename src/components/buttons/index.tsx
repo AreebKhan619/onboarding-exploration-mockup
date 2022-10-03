@@ -1,18 +1,19 @@
 import { CustomButton } from "./styled";
 
-interface InputProps {
+interface InputProps extends React.HTMLAttributes<HTMLButtonElement> {
   text: string;
   variant: "primary" | "secondary" | "tertiary" | "ghost";
-  span?: "block";
+  wSpan?: "block";
 }
 
 export const Button: React.FC<InputProps> = ({
   text,
   variant = "primary",
-  span = "block",
+  wSpan = "block",
+  ...buttonProps
 }) => {
   return (
-    <CustomButton variant={variant} span={span}>
+    <CustomButton variant={variant} wSpan={wSpan} {...buttonProps}>
       {text}
     </CustomButton>
   );

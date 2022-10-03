@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { OptionContainer, SelectContainer } from "./styled";
 
 interface SelectProps {
@@ -16,18 +16,22 @@ interface OptionProps {
   onClick?: (...args: any) => void;
 }
 
-const Select: React.FC<SelectProps> = ({ value, onChange, children }) => {
-  const childrenWithCustomProps = React.Children.map(children, (child) => {
-    return React.isValidElement(child)
-      ? React.cloneElement(child as React.ReactHTMLElement<HTMLDivElement>, {
-          onClick: () => onChange(child.props.value),
-          isSelected: value === child.props.value,
-        })
-      : null;
-  });
+const Select = forwardRef<HTMLDivElement, SelectProps>(
+  ({ value, onChange, children }, ref) => {
+    const childrenWithCustomProps = React.Children.map(children, (child) => {
+      return React.isValidElement(child)
+        ? React.cloneElement(child as React.ReactHTMLElement<HTMLDivElement>, {
+            onClick: () => onChange(child.props.value),
+            isSelected: value === child.props.value,
+          })
+        : null;
+    });
 
-  return <SelectContainer>{childrenWithCustomProps}</SelectContainer>;
-};
+    return (
+      <SelectContainer ref={ref}>{childrenWithCustomProps}</SelectContainer>
+    );
+  }
+);
 
 export const Option: React.FC<OptionProps> = ({
   icon,

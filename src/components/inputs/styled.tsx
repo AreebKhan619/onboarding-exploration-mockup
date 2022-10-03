@@ -3,6 +3,7 @@ import styled from "styled-components";
 // TODO: Share this with index
 interface InputProps {
   w: "half" | "full";
+  hasError?: boolean;
 }
 
 export const InputContainer = styled.div<InputProps>`
@@ -29,7 +30,7 @@ export const InputContainer = styled.div<InputProps>`
     }};
     padding: 1.6rem;
     border-radius: ${(props) => props.theme.borderRadius.small};
-    border: 0.1rem solid ${(props) => props.theme.colors.greySecondary};
+    border: 0.1rem solid ${(props) => props.hasError ? props.theme.colors.redPrimary : props.theme.colors.greySecondary};
     &:focus-within {
       outline-color: ${(props) => props.theme.colors.purplePrimary};
     }

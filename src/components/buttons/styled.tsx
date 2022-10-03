@@ -3,12 +3,12 @@ import styled from "styled-components";
 // TODO: Consolidate with index types
 interface CustomButtonProps {
   variant: "primary" | "secondary" | "tertiary" | "ghost";
-  span?: "block";
+  wSpan?: "block";
 }
 
 export const CustomButton = styled.button<CustomButtonProps>`
   width: ${props=>{
-    switch (props.span) {
+    switch (props.wSpan) {
       case "block":
         return "100%"
       default:

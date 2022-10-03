@@ -1,37 +1,90 @@
-import React, { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+// Yup validation
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+// Custom Components
 import { Button } from "./components/buttons";
 import { Input } from "./components/inputs";
 import Select, { Option } from "./components/select";
 import StepFormIndicator from "./components/step-form-indicator";
 import { OnboardingContainer } from "./styled";
-import { OnboardingSteps } from "./ts/enums";
-import { ForUseBy } from "./ts/types";
-import Text from "./assets/localization/en.json";
-
-import { CheckIcon, SelfIcon, TeamIcon } from "./assets/images";
 import AppLogo from "./components/app-logo";
+// Enums and Types
+import { InputKeys, OnboardingSteps, ForUseBy } from "./ts/enums";
+import Text from "./assets/localization/en.json";
+// Images
+import { CheckIcon, SelfIcon, TeamIcon } from "./assets/images";
+
+const validationSchema = [
+  yup.object({
+    [InputKeys.FullName]: yup
+      .string()
+      .required("This field is required")
+      .max(20, "Length cannot exceed 20 characters")
+      .matches(/^[a-zA-Z\s]*$/, "Value can only contain alphabets"),
+    [InputKeys.DisplayName]: yup
+      .string()
+      .required("This field is required")
+      .max(20, "Length cannot exceed 20 characters")
+      .matches(/^[a-zA-Z\s]*$/, "Value can only contain alphabets"),
+  }),
+
+  yup.object({
+    [InputKeys.WorkspaceName]: yup
+      .string()
+      .required("This field is required")
+      .max(20, "Length cannot exceed 20 characters"),
+    [InputKeys.WorkspaceURL]: yup
+      .string()
+      .matches(
+        /^$|^[A-Za-z][A-Za-z0-9]*$/,
+        "Value contains prohibited characters"
+      ),
+  }),
+  yup.object({
+    [InputKeys.ForUseBy]: yup
+      .string()
+      .nullable()
+      .oneOf(["self", "team"])
+      .required("Please select from one of the options"),
+  }),
+  yup.object({})
+];
 
 function Onboarding() {
   const [currentStep, setCurrentStep] = useState<OnboardingSteps>(
     OnboardingSteps.NameStep
   );
 
-  const [fullName, setFullName] = useState("");
-  const [displayName, setDisplayName] = useState("");
-  const [workspaceName, setWorkspaceName] = useState("");
-  const [workspaceURL, setWorkspaceURL] = useState("");
-  const [forUseBy, setForUseBy] = useState<ForUseBy | null>(null);
+  const focusableInputRef = useRef<HTMLInputElement | null>(null);
+  const currentValidationSchema = validationSchema[currentStep - 1];
 
-  const focusableInputRef = useRef<HTMLInputElement>(null);
+  const {
+    watch,
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(currentValidationSchema),
+    defaultValues: {
+      [InputKeys.FullName]: "",
+      [InputKeys.DisplayName]: "",
+      [InputKeys.WorkspaceName]: "",
+      [InputKeys.WorkspaceURL]: "",
+      [InputKeys.ForUseBy]: null,
+    },
+  });
 
   useEffect(() => {
     focusableInputRef?.current?.focus?.();
   }, [currentStep]);
 
-  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmitHandler = (data: { [k: string]: any }) => {
     if (currentStep === OnboardingSteps.CompletedStep) {
       window.alert("App launching...");
+      console.log(data);
     } else {
       setCurrentStep(currentStep + 1);
     }
@@ -57,15 +110,27 @@ function Onboarding() {
         subtitle = Text.stepThreeSubtitle;
         break;
       case OnboardingSteps.CompletedStep:
-        title = "Congratulations, " + fullName + "!";
+        title = "Congratulations, " + watch("fullName") + "!";
         subtitle = Text.stepFourSubtitle;
         break;
       default:
         break;
     }
 
-    return { title, subtitle, fullName };
+    return { title, subtitle };
   }, [currentStep]);
+
+  const { ref, ...fullNameProps } = {
+    ...register(InputKeys.FullName),
+  };
+
+  const { ref: workspaceRef, ...workspaceProps } = {
+    ...register(InputKeys.WorkspaceName),
+  };
+
+  const getErrorMsg = (name: string) => {
+    return ((errors as any)?.[name]?.message as string) || "";
+  };
 
   const getStepBasedContent = () => {
     switch (currentStep) {
@@ -73,19 +138,19 @@ function Onboarding() {
         return (
           <>
             <Input
-              ref={focusableInputRef}
-              value={fullName}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setFullName(e.target.value)
-              }
+              {...fullNameProps}
+              name={InputKeys.FullName}
+              ref={(e) => {
+                ref(e);
+                focusableInputRef.current = e;
+              }}
+              errorMsg={getErrorMsg(InputKeys.FullName)}
               placeholder="Steve Jobs"
               label="Full Name"
             />
             <Input
-              value={displayName}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setDisplayName(e.target.value)
-              }
+              {...register(InputKeys.DisplayName)}
+              errorMsg={getErrorMsg(InputKeys.DisplayName)}
               placeholder="Steve"
               label="Display Name"
             />
@@ -95,20 +160,20 @@ function Onboarding() {
         return (
           <>
             <Input
-              ref={focusableInputRef}
-              value={workspaceName}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setWorkspaceName(e.target.value)
-              }
+              {...workspaceProps}
+              name={InputKeys.WorkspaceName}
+              ref={(e) => {
+                workspaceRef(e);
+                focusableInputRef.current = e;
+              }}
+              errorMsg={getErrorMsg(InputKeys.WorkspaceName)}
               placeholder="Eden"
               label="Workspace Name"
             />
 
             <Input
-              value={workspaceURL}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setWorkspaceURL(e.target.value)
-              }
+              {...register(InputKeys.WorkspaceURL)}
+              errorMsg={getErrorMsg(InputKeys.WorkspaceURL)}
               mode="split"
               prefix="www.eden.com/"
               placeholder="Example"
@@ -119,20 +184,32 @@ function Onboarding() {
         );
       case OnboardingSteps.UseStep:
         return (
-          <Select value={forUseBy} onChange={setForUseBy}>
-            <Option
-              icon={SelfIcon}
-              value="self"
-              title={Text.useStepOptionOneTitle}
-              subtitle={Text.useStepOptionOneSubtitle}
+          <>
+            <Controller
+              render={({ field }) => (
+                <Select {...field}>
+                  <Option
+                    icon={SelfIcon}
+                    value={ForUseBy.Self}
+                    title={Text.useStepOptionOneTitle}
+                    subtitle={Text.useStepOptionOneSubtitle}
+                  />
+                  <Option
+                    icon={TeamIcon}
+                    value={ForUseBy.Team}
+                    title={Text.useStepOptionTwoTitle}
+                    subtitle={Text.useStepOptionTwoSubtitle}
+                  />
+                </Select>
+              )}
+              control={control}
+              name={InputKeys.ForUseBy}
+              defaultValue={null}
             />
-            <Option
-              icon={TeamIcon}
-              value="team"
-              title={Text.useStepOptionTwoTitle}
-              subtitle={Text.useStepOptionTwoSubtitle}
-            />
-          </Select>
+            <small className="error">
+              {(errors as any)?.[InputKeys.ForUseBy]?.message}
+            </small>
+          </>
         );
       default:
         break;
@@ -156,7 +233,7 @@ function Onboarding() {
       <h2 className="title">{title}</h2>
       <small className="subtitle">{subtitle}</small>
 
-      <form onSubmit={onSubmitHandler} className="input-form">
+      <form onSubmit={handleSubmit(onSubmitHandler)} className="input-form">
         {getStepBasedContent()}
 
         <Button
