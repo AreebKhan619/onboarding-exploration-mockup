@@ -35,6 +35,7 @@ export const StepBalloon = styled.div<StepBalloonProps>`
       ? props.theme.colors.white
       : props.theme.colors.purplePrimary};
   font-size: ${(props) => props.theme.fontSizes.small};
+  cursor: ${props=>props.isCompleted ? "pointer": "default"};
 
   &:first-child::before,
   :last-child::after {

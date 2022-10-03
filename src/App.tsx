@@ -16,6 +16,9 @@ function App() {
   );
 
   const [fullName, setFullName] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [workspaceName, setWorkspaceName] = useState("");
+  const [workspaceURL, setWorkspaceURL] = useState("");
   const [forUseBy, setForUseBy] = useState<ForUseBy | null>(null);
 
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
@@ -24,26 +27,6 @@ function App() {
     } else {
       setCurrentStep(currentStep + 1);
     }
-  };
-
-  const getStepInputs = () => {
-    const stepArrayInputs = [];
-    switch (currentStep) {
-      case OnboardingSteps.NameStep:
-        stepArrayInputs.push({
-          label: "Full Name",
-          secondaryLabel: null,
-          placeholder: "Steve Jobs",
-          value: fullName,
-          changeHandler: () => null,
-          type: null,
-        });
-        break;
-
-      default:
-        break;
-    }
-    return stepArrayInputs;
   };
 
   const isCompletedStep = currentStep === OnboardingSteps.CompletedStep;
@@ -70,7 +53,6 @@ function App() {
         subtitle =
           "You have completed the onboarding, you can start using the Eden!";
         break;
-
       default:
         break;
     }
@@ -83,16 +65,41 @@ function App() {
       case OnboardingSteps.NameStep:
         return (
           <>
-            <Input placeholder="Steve Jobs" label="Full Name" />
-            <Input placeholder="Steve" label="Display Name" />
+            <Input
+              value={fullName}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setFullName(e.target.value)
+              }
+              placeholder="Steve Jobs"
+              label="Full Name"
+            />
+            <Input
+              value={displayName}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setDisplayName(e.target.value)
+              }
+              placeholder="Steve"
+              label="Display Name"
+            />
           </>
         );
       case OnboardingSteps.WorkspaceStep:
         return (
           <>
-            <Input placeholder="Eden" label="Workspace Name" />
+            <Input
+              value={workspaceName}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setWorkspaceName(e.target.value)
+              }
+              placeholder="Eden"
+              label="Workspace Name"
+            />
 
             <Input
+              value={workspaceURL}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setWorkspaceURL(e.target.value)
+              }
               mode="split"
               prefix="www.eden.com/"
               placeholder="Example"
@@ -132,9 +139,12 @@ function App() {
       <StepFormIndicator
         totalSteps={OnboardingSteps.CompletedStep}
         currentStep={currentStep}
+        setStep={setCurrentStep}
       />
 
-      {currentStep === OnboardingSteps.CompletedStep && <img className="check-icon" src={CheckIcon} />}
+      {currentStep === OnboardingSteps.CompletedStep && (
+        <img className="check-icon" src={CheckIcon} />
+      )}
 
       <h2 className="title">{title}</h2>
       <small className="subtitle">{subtitle}</small>

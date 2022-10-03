@@ -1,24 +1,32 @@
+import React from "react";
 import { FormIndicatorContainer, StepBalloon } from "./styled";
 
 interface StepFormIndicatorProps {
   totalSteps: number;
   currentStep: number;
-  disableBalloonNavigation?: boolean;
+  setStep?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const StepFormIndicator: React.FC<StepFormIndicatorProps> = ({
   totalSteps,
   currentStep,
-  disableBalloonNavigation,
+  setStep,
 }) => {
   const stepArr = new Array(totalSteps).fill(null);
   return (
     <FormIndicatorContainer>
-      {stepArr.map((_, stepNo) => (
-        <StepBalloon isCompleted={stepNo + 1 <= currentStep} key={stepNo}>
-          {stepNo + 1}
-        </StepBalloon>
-      ))}
+      {stepArr.map((_, stepNo) => {
+        const translatedStepNo = stepNo + 1;
+        return (
+          <StepBalloon
+            onClick={() => setStep?.(translatedStepNo)}
+            isCompleted={translatedStepNo <= currentStep}
+            key={translatedStepNo}
+          >
+            {translatedStepNo}
+          </StepBalloon>
+        );
+      })}
     </FormIndicatorContainer>
   );
 };

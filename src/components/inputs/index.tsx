@@ -1,6 +1,6 @@
 import { InputContainer } from "./styled";
 
-interface InputProps {
+interface InputProps extends React.HTMLProps<HTMLInputElement> {
   label: string;
   placeholder: string;
   secondaryLabel?: string;
@@ -15,7 +15,7 @@ export const Input: React.FC<InputProps> = ({
   prefix = "Enter value",
   mode = "normal",
   secondaryLabel,
-  placeholder,
+  ...inputElementProps
 }) => {
   const getInput = () => {
     switch (mode) {
@@ -23,11 +23,11 @@ export const Input: React.FC<InputProps> = ({
         return (
           <div className="split-container">
             <span className="left">{prefix}</span>
-            <input placeholder={placeholder} />
+            <input {...inputElementProps} />
           </div>
         );
       case "normal":
-        return <input placeholder={placeholder} />;
+        return <input {...inputElementProps} />;
       default:
         break;
     }
