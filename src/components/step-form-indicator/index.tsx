@@ -27,6 +27,8 @@ const StepFormIndicator: React.FC<StepFormIndicatorProps> = ({
             onClick={() => onStepClick(translatedStepNo)}
             isCompleted={translatedStepNo <= currentStep}
             key={translatedStepNo}
+            role="button"
+            data-testid={`step-${translatedStepNo}`}
           >
             {translatedStepNo}
           </StepBalloon>

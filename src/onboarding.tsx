@@ -49,8 +49,16 @@ const validationSchema = [
       .oneOf(["self", "team"])
       .required("Please select from one of the options"),
   }),
-  yup.object({})
+  yup.object({}),
 ];
+
+const defaultValues = {
+  [InputKeys.FullName]: "",
+  [InputKeys.DisplayName]: "",
+  [InputKeys.WorkspaceName]: "",
+  [InputKeys.WorkspaceURL]: "",
+  [InputKeys.ForUseBy]: null,
+};
 
 function Onboarding() {
   const [currentStep, setCurrentStep] = useState<OnboardingSteps>(
@@ -68,13 +76,7 @@ function Onboarding() {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(currentValidationSchema),
-    defaultValues: {
-      [InputKeys.FullName]: "",
-      [InputKeys.DisplayName]: "",
-      [InputKeys.WorkspaceName]: "",
-      [InputKeys.WorkspaceURL]: "",
-      [InputKeys.ForUseBy]: null,
-    },
+    defaultValues,
   });
 
   useEffect(() => {
@@ -237,6 +239,7 @@ function Onboarding() {
         {getStepBasedContent()}
 
         <Button
+          data-testid="submit"
           text={
             isCompletedStep
               ? Text.onboardingSecondaryBtnText
