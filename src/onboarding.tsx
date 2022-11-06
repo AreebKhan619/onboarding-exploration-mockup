@@ -131,7 +131,7 @@ function Onboarding() {
   };
 
   const getErrorMsg = (name: string) => {
-    return ((errors as any)?.[name]?.message as string) || "";
+    return ((errors as Record<string, any>)?.[name]?.message as string) || "";
   };
 
   const getStepBasedContent = () => {
