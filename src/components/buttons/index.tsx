@@ -1,10 +1,5 @@
 import { CustomButton } from "./styled";
-
-interface InputProps extends React.HTMLAttributes<HTMLButtonElement> {
-  text: string;
-  variant: "primary" | "secondary" | "tertiary" | "ghost";
-  wSpan?: "block";
-}
+import { InputProps } from "./types";
 
 export const Button: React.FC<InputProps> = ({
   text,
