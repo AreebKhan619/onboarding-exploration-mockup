@@ -239,7 +239,7 @@ function Onboarding() {
         {getStepBasedContent()}
 
         <Button
-          data-testid="submit"
+          id="submit-btn"
           text={
             isCompletedStep
               ? Text.onboardingSecondaryBtnText
