@@ -19,7 +19,7 @@ const StepFormIndicator: React.FC<StepFormIndicatorProps> = ({
   };
 
   return (
-    <FormIndicatorContainer>
+    <FormIndicatorContainer className="step-indicator-container">
       {stepArr.map((_, stepNo) => {
         const translatedStepNo = stepNo + 1;
         const isCompleted = translatedStepNo <= currentStep;

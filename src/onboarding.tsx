@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 // Yup validation
 import * as yup from "yup";
@@ -65,7 +65,6 @@ function Onboarding() {
     OnboardingSteps.NameStep
   );
 
-  const focusableInputRef = useRef<HTMLInputElement | null>(null);
   const currentValidationSchema = validationSchema[currentStep - 1];
 
   const {
@@ -74,14 +73,11 @@ function Onboarding() {
     control,
     handleSubmit,
     formState: { errors },
+    setFocus,
   } = useForm({
     resolver: yupResolver(currentValidationSchema),
     defaultValues,
   });
-
-  useEffect(() => {
-    focusableInputRef?.current?.focus?.();
-  }, [currentStep]);
 
   const onSubmitHandler = (data: { [k: string]: any }) => {
     if (currentStep === OnboardingSteps.CompletedStep) {
@@ -91,6 +87,19 @@ function Onboarding() {
       setCurrentStep(currentStep + 1);
     }
   };
+
+  useEffect(() => {
+    switch (currentStep) {
+      case OnboardingSteps.NameStep:
+        setFocus(InputKeys.FullName);
+        break;
+      case OnboardingSteps.WorkspaceStep:
+        setFocus(InputKeys.WorkspaceName);
+        break;
+      default:
+        break;
+    }
+  }, [currentStep]);
 
   const isCompletedStep = currentStep === OnboardingSteps.CompletedStep;
 
@@ -122,14 +131,6 @@ function Onboarding() {
     return { title, subtitle };
   }, [currentStep]);
 
-  const { ref, ...fullNameProps } = {
-    ...register(InputKeys.FullName),
-  };
-
-  const { ref: workspaceRef, ...workspaceProps } = {
-    ...register(InputKeys.WorkspaceName),
-  };
-
   const getErrorMsg = (name: string) => {
     return ((errors as Record<string, any>)?.[name]?.message as string) || "";
   };
@@ -140,18 +141,15 @@ function Onboarding() {
         return (
           <>
             <Input
-              {...fullNameProps}
-              name={InputKeys.FullName}
-              ref={(e) => {
-                ref(e);
-                focusableInputRef.current = e;
-              }}
+              {...register(InputKeys.FullName)}
+              key={InputKeys.FullName}
               errorMsg={getErrorMsg(InputKeys.FullName)}
               placeholder="Steve Jobs"
               label="Full Name"
             />
             <Input
               {...register(InputKeys.DisplayName)}
+              key={InputKeys.DisplayName}
               errorMsg={getErrorMsg(InputKeys.DisplayName)}
               placeholder="Steve"
               label="Display Name"
@@ -162,12 +160,7 @@ function Onboarding() {
         return (
           <>
             <Input
-              {...workspaceProps}
-              name={InputKeys.WorkspaceName}
-              ref={(e) => {
-                workspaceRef(e);
-                focusableInputRef.current = e;
-              }}
+              {...register(InputKeys.WorkspaceName)}
               errorMsg={getErrorMsg(InputKeys.WorkspaceName)}
               placeholder="Eden"
               label="Workspace Name"
@@ -208,9 +201,7 @@ function Onboarding() {
               name={InputKeys.ForUseBy}
               defaultValue={null}
             />
-            <small className="error">
-              {(errors as any)?.[InputKeys.ForUseBy]?.message}
-            </small>
+            <small className="error">{getErrorMsg(InputKeys.ForUseBy)}</small>
           </>
         );
       default:
