@@ -41,7 +41,7 @@ export const Option: React.FC<OptionProps> = ({
   isSelected = false,
 }) => {
   return (
-    <OptionContainer onClick={onClick} isSelected={isSelected}>
+    <OptionContainer role={"button"} onClick={onClick} isSelected={isSelected}>
       {icon && <img src={icon} className="icon" />}
       <div className="title">{title}</div>
       <div className="subtitle">{subtitle}</div>
